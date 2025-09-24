@@ -9,6 +9,4 @@ public interface IProductRepository {
     Product findById(Long id);
     void save(Product product);
     void update(Long id, Product product);
-    void remove(Long id);
-    List<Product> searchByName(String name);
 }

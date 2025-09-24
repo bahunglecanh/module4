@@ -35,35 +35,15 @@ public class ProductController {
 
     // Cập nhật sản phẩm
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("product", productService.findById(id));
         return "product/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
+    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product product) {
         productService.update(id, product);
         return "redirect:/products";
     }
 
-    // Xoá sản phẩm
-    @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        productService.remove(id);
-        return "redirect:/products";
-    }
-
-    // Xem chi tiết sản phẩm
-    @GetMapping("/{id}")
-    public String viewProduct(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productService.findById(id));
-        return "product/view";
-    }
-
-    // Tìm kiếm sản phẩm
-    @GetMapping("/search")
-    public String search(@RequestParam String name, Model model) {
-        model.addAttribute("products", productService.searchByName(name));
-        return "product/list";
-    }
 }

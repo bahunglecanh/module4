@@ -31,13 +31,4 @@ public class ProductService implements IProductService{
         productRepository.update(id, product);
     }
 
-    @Override
-    public void remove(Long id) {
-        productRepository.remove(id);
-    }
-
-    @Override
-    public List<Product> searchByName(String name) {
-        return productRepository.searchByName(name);
-    }
 }
