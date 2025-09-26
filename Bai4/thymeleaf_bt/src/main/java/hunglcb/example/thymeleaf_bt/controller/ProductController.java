@@ -45,5 +45,11 @@ public class ProductController {
         productService.update(id, product);
         return "redirect:/products";
     }
+    // Cập nhật sản phẩm
+    @GetMapping("/view/{id}")
+    public String detail(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("product", productService.findById(id));
+        return "product/view";
+    }
 
 }
