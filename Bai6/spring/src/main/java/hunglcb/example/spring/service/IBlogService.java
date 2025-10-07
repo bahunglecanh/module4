@@ -1,13 +1,15 @@
 package hunglcb.example.spring.service;
 
 import hunglcb.example.spring.entity.Blog;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IBlogService {
     Blog save(Blog blog);
     List<Blog> findAll();
+    Page<Blog> findAll(String name, Pageable pageable);
     Blog findById(Long id);
     void deleteById(Long id);
 }

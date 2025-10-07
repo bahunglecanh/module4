@@ -7,6 +7,10 @@
 <body>
 <h1>Danh sách Blog</h1>
 <p><a th:href="@{/blogs/news}">Viết bài mới</a></p>
+<form class="d-flex" action="/blogs" method="get">
+    <input th:value="${searchName}" class="form-control form-control-sm w-50" name="searchName" placeholder="Nhập tên">
+    <button class="btn btn-primary btn-sm">Tìm kiếm</button>
+</form>
 <div th:if="${success}"><p th:text="${success}"></p></div>
 <div th:if="${error}"><p th:text="${error}"></p></div>
 <table>
@@ -14,7 +18,7 @@
     <tr><th>Tiêu đề</th><th>Tóm tắt</th><th>Hành động</th></tr>
     </thead>
     <tbody>
-    <tr th:each="b : ${blogs}">
+    <tr th:each="b : ${blogsPage.content}">
         <td th:text="${b.title}">Title</td>
         <td th:text="${b.summary}">Summary</td>
         <td>
@@ -27,5 +31,8 @@
     </tr>
     </tbody>
 </table>
+<a th:if="${blogsPage.hasPrevious()}" th:href="@{/blogs(page=${blogsPage.number-1},searchName=${searchName})}">Trước</a>
+<span th:text="${blogsPage.number+1}"></span>/<span th:text="${blogsPage.totalPages}"></span>
+<a th:if="${blogsPage.hasNext()}" th:href="@{/blogs(page=${blogsPage.number+1},searchName=${searchName})}">Sau</a>
 </body>
 </html>

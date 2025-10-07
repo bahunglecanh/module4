@@ -3,11 +3,15 @@ package hunglcb.example.spring.controller;
 import hunglcb.example.spring.entity.Blog;
 import hunglcb.example.spring.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/blogs")
@@ -16,9 +20,15 @@ public class BlogController {
     private IBlogService iBlogService;
 
     @GetMapping
-    public String list(Model model){
-        model.addAttribute("blogs",iBlogService.findAll());
-        return "list";
+    public ModelAndView list(@RequestParam(name = "page",required = false,defaultValue = "0") int page,
+                             @RequestParam(name = "searchName",required = false,defaultValue = "")String searchName){
+        Pageable pageable= PageRequest.of(page,3, Sort.by("title").descending().and(Sort.by("summary").ascending()));
+
+        ModelAndView modelAndView=new ModelAndView("list");
+        Page<Blog> blogsPage=iBlogService.findAll(searchName,pageable);
+        modelAndView.addObject("blogsPage",blogsPage);
+        modelAndView.addObject("searchName",searchName);
+        return modelAndView;
     }
     @GetMapping("/news")
     public String createBlog(Model model){

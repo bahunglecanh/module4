@@ -3,6 +3,8 @@ package hunglcb.example.spring.service;
 import hunglcb.example.spring.entity.Blog;
 import hunglcb.example.spring.repository.IBlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,11 @@ public class BlogServiceImpl implements IBlogService{
     @Override
     public List<Blog> findAll() {
         return blogRepository.findAll();
+    }
+
+    @Override
+    public Page<Blog> findAll(String name, Pageable pageable) {
+        return blogRepository.findAllByTitleContainingIgnoreCase(name,pageable);
     }
 
     @Override
