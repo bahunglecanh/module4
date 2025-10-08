@@ -12,30 +12,34 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     IUserService userService;
 
     @GetMapping(value = "")
     public String showList(Model model){
-        model.addAttribute("message", "Register successful");
-        return "home";
+        List<User> users=userService.findAll();
+        model.addAttribute("users", users);
+        return "form/home";
     }
 
     @GetMapping("/register")
     public String showForm(Model model){
         model.addAttribute("user",new User());
-        return "register";
+        return "form/register";
     }
     @PostMapping("/submit")
     public String addValidate(@Validated @ModelAttribute(name = "user") User user,
                               BindingResult bindingResult,
                               Model model){
        if (bindingResult.hasErrors()){
-           return "register";
+           return "form/register";
        }
+       userService.save(user);
        return "redirect:/users";
     }
 }
