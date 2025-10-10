@@ -1,5 +1,6 @@
 package hunglcb.example.validation.service;
 
+import hunglcb.example.validation.dto.SongDTO;
 import hunglcb.example.validation.entity.Song;
 import hunglcb.example.validation.entity.User;
 import hunglcb.example.validation.repository.ISongRepository;
@@ -21,8 +22,13 @@ public class SongServiceIml implements ISongService{
     }
 
     @Override
-    public Song save(Song song) {
-        return songRepository.save(song);
+    public Song save(SongDTO songDTO) {
+        Song entity=new Song();
+        entity.setId(songDTO.getId());
+        entity.setNameSong(songDTO.getNameSong());
+        entity.setArtist(songDTO.getArtist());
+        entity.setGenre(songDTO.getGenre());
+        return songRepository.save(entity);
     }
 
     @Override

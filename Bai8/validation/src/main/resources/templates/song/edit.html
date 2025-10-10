@@ -6,6 +6,7 @@
 </head>
 <body>
 <form th:action="@{/songs/edit}" method="post" th:object="${song}">
+  <input type="hidden" th:field="*{id}">
   <label>Name Song: </label>
   <input type="text" th:field="*{nameSong}">
   <small class="text-danger" th:if="${#fields.hasErrors('nameSong')}" th:errors="*{nameSong}"></small><br>

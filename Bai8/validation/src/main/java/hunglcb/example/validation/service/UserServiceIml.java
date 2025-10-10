@@ -1,5 +1,6 @@
 package hunglcb.example.validation.service;
 
+import hunglcb.example.validation.dto.UserDTO;
 import hunglcb.example.validation.entity.User;
 import hunglcb.example.validation.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,14 @@ public class UserServiceIml implements IUserService{
     }
 
     @Override
-    public boolean save(User user) {
-        return userRepository.save(user)!=null;
+    public boolean save(UserDTO user) {
+        User entity = new User();
+        entity.setId(user.getId());
+        entity.setFirstName(user.getFirstName());
+        entity.setLastName(user.getLastName());
+        entity.setPhoneNumber(user.getPhoneNumber());
+        entity.setAge(user.getAge());
+        entity.setEmail(user.getEmail());
+        return userRepository.save(entity) != null;
     }
 }

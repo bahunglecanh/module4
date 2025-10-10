@@ -1,5 +1,6 @@
 package hunglcb.example.validation.controller;
 
+import hunglcb.example.validation.dto.UserDTO;
 import hunglcb.example.validation.entity.User;
 import hunglcb.example.validation.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +30,17 @@ public class UserController {
 
     @GetMapping("/register")
     public String showForm(Model model){
-        model.addAttribute("user",new User());
+        model.addAttribute("user",new UserDTO());
         return "form/register";
     }
     @PostMapping("/submit")
-    public String addValidate(@Validated @ModelAttribute(name = "user") User user,
+    public String addValidate(@Validated @ModelAttribute(name = "user") UserDTO userDTO,
                               BindingResult bindingResult,
                               Model model){
        if (bindingResult.hasErrors()){
            return "form/register";
        }
-       userService.save(user);
+       userService.save(userDTO);
        return "redirect:/users";
     }
 }
