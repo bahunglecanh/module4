@@ -1,6 +1,6 @@
 package hunglcb.example.aop.service;
 
-public class LibraryExceptions {
+public class LibraryExceptions extends RuntimeException{
 	public static class OutOfStockException extends RuntimeException {
 		public OutOfStockException(String message) { super(message); }
 	}

@@ -24,20 +24,20 @@ public class LibraryAspects {
 	}
 
 	// Log state changes: after successful borrow/return
-	@AfterReturning(pointcut = "execution(* hunglcb.example.aop.service.LibraryService.borrowBook(..))", returning = "code")
+	@AfterReturning(pointcut = "execution(*LibraryService.borrowBook(..))", returning = "code")
 	public void afterBorrow(JoinPoint jp, Object code) {
 		Object[] args = jp.getArgs();
 		log.info("Borrowed book id={} -> ticket={}", args[0], code);
 	}
 
-	@After("execution(* hunglcb.example.aop.service.LibraryService.returnBook(..))")
+	@After("execution(*LibraryService.returnBook(..))")
 	public void afterReturn(JoinPoint jp) {
 		Object[] args = jp.getArgs();
 		log.info("Returned book with ticket={}", args[0]);
 	}
 
 	// Log errors that change flow
-	@AfterThrowing(pointcut = "within(hunglcb.example.aop.service.LibraryService)", throwing = "ex")
+	@AfterThrowing(pointcut = "within(*LibraryService)", throwing = "ex")
 	public void afterError(JoinPoint jp, Throwable ex) {
 		log.warn("Error in {}: {}", jp.getSignature(), ex.getMessage());
 	}

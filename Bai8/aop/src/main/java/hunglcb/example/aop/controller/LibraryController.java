@@ -1,6 +1,8 @@
 package hunglcb.example.aop.controller;
 
 import hunglcb.example.aop.service.LibraryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/books")
 public class LibraryController {
 	private final LibraryService libraryService;
+    private static final Logger log = LoggerFactory.getLogger(LibraryController.class);
 
 	public LibraryController(LibraryService libraryService) {
 		this.libraryService = libraryService;
@@ -30,6 +33,7 @@ public class LibraryController {
 	public String borrow(@PathVariable Long id, Model model) {
 		String code = libraryService.borrowBook(id);
 		model.addAttribute("code", code);
+        log.info("------------------------ Borrow success: bookId={}, ticket={} -----------------------", id, code);
 		return "books/borrow-success";
 	}
 
@@ -42,6 +46,7 @@ public class LibraryController {
 	public String doReturn(@RequestParam String code, Model model) {
 		libraryService.returnBook(code);
 		model.addAttribute("message", "Trả sách thành công");
+        log.info("----------------------------- Return success: ticket={}-----------------------------", code);
 		return "books/return-success";
 	}
 }

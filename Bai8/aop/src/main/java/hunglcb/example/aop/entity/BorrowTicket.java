@@ -1,8 +1,16 @@
 package hunglcb.example.aop.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BorrowTicket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,29 +22,6 @@ public class BorrowTicket {
 	@ManyToOne(optional = false)
 	private Book book;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
-	}
 }
 
 
