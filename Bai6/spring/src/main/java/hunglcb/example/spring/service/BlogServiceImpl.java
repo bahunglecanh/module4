@@ -37,4 +37,9 @@ public class BlogServiceImpl implements IBlogService{
     public void deleteById(Long id) {
         blogRepository.deleteById(id);
     }
+
+    @Override
+    public Page<Blog> getAll(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
 }

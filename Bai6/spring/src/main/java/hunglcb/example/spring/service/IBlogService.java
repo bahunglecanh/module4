@@ -12,4 +12,5 @@ public interface IBlogService {
     Page<Blog> findAll(String name, Pageable pageable);
     Blog findById(Long id);
     void deleteById(Long id);
+    Page<Blog> getAll(Pageable pageable);
 }

@@ -21,12 +21,12 @@ public class CartController {
         return new CartDto();
     }
     @GetMapping
-    public String showCart(@SessionAttribute(name = "cart",required = false) CartDto cartDto, Model model){
+    public String showCart(@ModelAttribute("cart") CartDto cartDto, Model model){
         model.addAttribute("cartDto",cartDto);
         return "cart";
     }
     @GetMapping("/add/{id}")
-    public String addCart(@PathVariable Integer id,@SessionAttribute(name = "cart") CartDto cartDto,@RequestParam(name = "action",required = false) String action){
+    public String addCart(@PathVariable Integer id,@ModelAttribute("cart") CartDto cartDto,@RequestParam(name = "action",required = false) String action){
         Product product=productService.findById(id);
         if (product!=null){
             cartDto.addProduct(product);
@@ -38,7 +38,7 @@ public class CartController {
     }
 
     @PostMapping("/update")
-    public String updateCart(@RequestParam("productId") Integer productId,@RequestParam("quanlity") Integer quantity,@SessionAttribute("cart") CartDto cartDto){
+    public String updateCart(@RequestParam("productId") Integer productId,@RequestParam("quanlity") Integer quantity,@ModelAttribute("cart") CartDto cartDto){
         Product product=productService.findById(productId);
         if (product != null) {
             cartDto.changeQuantity(product, quantity);
@@ -46,7 +46,7 @@ public class CartController {
         return "redirect:/cart";
     }
     @GetMapping("/delete/{id}")
-    public String deleteFromCart(@PathVariable Integer id, @SessionAttribute("cart") CartDto cart) {
+    public String deleteFromCart(@PathVariable Integer id, @ModelAttribute("cart") CartDto cart) {
         Product product = productService.findById(id);
         if (product != null) {
             cart.changeQuantity(product, 0);
@@ -54,7 +54,7 @@ public class CartController {
         return "redirect:/cart";
     }
     @GetMapping("/checkout")
-    public String checkout(@SessionAttribute("cart") CartDto cart, RedirectAttributes redirectAttributes) {
+    public String checkout(@ModelAttribute("cart") CartDto cart, RedirectAttributes redirectAttributes) {
         cart.getProducts().clear();
         redirectAttributes.addFlashAttribute("successMessage", "Thanh toán thành công! Cảm ơn bạn đã mua hàng.");
         return "redirect:/cart";
